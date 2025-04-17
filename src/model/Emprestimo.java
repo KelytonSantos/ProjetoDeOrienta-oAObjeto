@@ -43,7 +43,8 @@ public class Emprestimo {
                 .println("The user is: " + getUsuario().getName() + " with associated email: " + getUsuario().getEmail()
                         + " subscribed with the CPF: " + getUsuario().getCpf() + " has borrowed the book : "
                         + getLivro().getTitle() +
-                        " released in: " + getLivro().getReleaseYear() + " by the author: " + getLivro().getAuthor());
+                        " released in: " + getLivro().getReleaseYear() + " by the author: " + getLivro().getAuthor()
+                        + " for: " + getDays() + " days");
     }
 
 }
