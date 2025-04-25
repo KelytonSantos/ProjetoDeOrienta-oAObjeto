@@ -1,8 +1,9 @@
 package model;
 
 public class Aluno {
-    private String nome;
+
     private Integer matricula;
+    private String nome;
     private String curso;
     private Boolean trancamentoDeCurso;
 

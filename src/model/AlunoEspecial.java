@@ -4,10 +4,12 @@ public class AlunoEspecial extends Aluno {
     private Boolean alunoEspecial;
 
     public AlunoEspecial() {
+        super();
         this.alunoEspecial = Boolean.valueOf(false);
     }
 
-    public AlunoEspecial(Boolean alunoEspecial) {
+    public AlunoEspecial(String nome, Integer matricula, String curso, Boolean trancamento, Boolean alunoEspecial) {
+        super(nome, matricula, curso, trancamento);
         this.alunoEspecial = Boolean.valueOf(alunoEspecial);
     }
 
