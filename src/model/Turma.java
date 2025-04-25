@@ -1,12 +1,96 @@
 package model;
 
-import java.time.Instant;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
+import java.util.HashMap;
+import java.util.Map;
+
+import model.ENUM.MetodoDeAvaliacao;
+import model.ENUM.Modalidade;
 
 public class Turma {
     private Professor professor;
     private Integer semestre;
-    private Instant horarioDeAula;
-    private Integer capacidade;
     private MetodoDeAvaliacao metodoDeAvaliacao;
+    private Modalidade modoDeParticipacao;
+    private Map<DayOfWeek, LocalTime> horarioDeAula;
+    private Integer capacidade;
+    private Integer maxAlunos;
+
+    public Turma() {
+        this.professor = new Professor();
+        this.semestre = 0;
+        this.metodoDeAvaliacao = MetodoDeAvaliacao.MEDIA_SIMPLES;
+        this.modoDeParticipacao = Modalidade.PRESENCIAL;
+        this.horarioDeAula = new HashMap<>();
+        this.capacidade = 0;
+        this.maxAlunos = 190;
+    }
+
+    public Turma(Professor professor, Integer semestre, MetodoDeAvaliacao metodoDeAvaliacao,
+            Modalidade modoDeParticipacao, Integer capacidade, Integer maxAlunos) {
+        this.professor = professor;
+        this.semestre = semestre;
+        this.metodoDeAvaliacao = metodoDeAvaliacao;
+        this.modoDeParticipacao = modoDeParticipacao;
+        this.capacidade = capacidade;
+        this.maxAlunos = maxAlunos;
+    }
+
+    public Professor getProfessor() {
+        return professor;
+    }
+
+    public void setProfessor(Professor professor) {
+        this.professor = professor;
+    }
+
+    public Integer getSemestre() {
+        return semestre;
+    }
+
+    public void setSemestre(Integer semestre) {
+        this.semestre = semestre;
+    }
+
+    public MetodoDeAvaliacao getMetodoDeAvaliacao() {
+        return metodoDeAvaliacao;
+    }
+
+    public void setMetodoDeAvaliacao(MetodoDeAvaliacao metodoDeAvaliacao) {
+        this.metodoDeAvaliacao = metodoDeAvaliacao;
+    }
+
+    public Modalidade getModoDeParticipacao() {
+        return modoDeParticipacao;
+    }
+
+    public void setModoDeParticipacao(Modalidade modoDeParticipacao) {
+        this.modoDeParticipacao = modoDeParticipacao;
+    }
+
+    public Integer getCapacidade() {
+        return capacidade;
+    }
+
+    public void setCapacidade(Integer capacidade) {
+        this.capacidade = capacidade;
+    }
+
+    public Integer getMaxAlunos() {
+        return maxAlunos;
+    }
+
+    public void setMaxAlunos(Integer maxAlunos) {
+        this.maxAlunos = maxAlunos;
+    }
+
+    public void setHorarioDeAula(DayOfWeek dia, int hora, int minuto) {
+        horarioDeAula.put(dia, LocalTime.of(hora, minuto));
+    }
+
+    public Map<DayOfWeek, LocalTime> getHorarioDeAula() {
+        return horarioDeAula;
+    }
 
 }
