@@ -4,12 +4,11 @@ import entidades.Aluno;
 import repositories.AlunoRepository;
 
 public class App {
+    public static Scanner sc = new Scanner(System.in);
 
     public static AlunoRepository alunoRepository = new AlunoRepository();
 
     public static void main(String[] args) throws Exception {
-
-        Scanner sc = new Scanner(System.in);
 
         System.out.println("Escolha um modo: ");
         System.out.println("1 - Modo Aluno (Normal e Especial)");
@@ -24,6 +23,7 @@ public class App {
                 System.out.println("1 - Cadastrar Aluno ou editar aluno");
                 System.out.println("2 - Matricular Alunos em disciplinas");
                 System.out.println("3 - Ver alunos cadastrados");
+
                 escolha = sc.nextInt();
 
                 switch (escolha) {
@@ -31,19 +31,22 @@ public class App {
                         System.out.println("Deseja matrícular aluno ou editar? (1 para matricular, 2 para editar)");
                         escolha = sc.nextInt();
                         if (escolha == 1)
-                            // matricularAluno();
-                            editarAluno();
+                            matricularAluno();
+
                         else if (escolha == 2) {
-                            // buscar do banco
+                            editarAluno();
                         } else {
                             System.out.println("Numero invalido!");
                         }
                         break;
-                    case 2:
+                    case 2: // fazer depois de criar func de matricular turma
 
                         break;
                     case 3:
-
+                        for (Aluno aluno : alunoRepository.getAlunos()) {
+                            System.out.println("Matricula: " + aluno.getMatricula() + " Nome: " + aluno.getNome()
+                                    + " Curso: " + aluno.getCurso());
+                        }
                         break;
                     default:
                         break;
@@ -100,8 +103,6 @@ public class App {
 
     public static void matricularAluno() {
 
-        Scanner sc = new Scanner(System.in);
-
         System.out.println("Digite a matrícula do aluno: ");
         Integer matricula = sc.nextInt();
         sc.nextLine();
@@ -115,20 +116,53 @@ public class App {
 
         alunoRepository.save(aluno);
 
-        sc.close();
     }
 
     public static void editarAluno() {
 
+        Aluno alunoParaEditar = new Aluno();
         Scanner sc = new Scanner(System.in);
 
         System.out.println("Digite a matricula do aluno: ");
         Integer matricula = sc.nextInt();
 
-        if (alunoRepository.getByMatriccula(matricula) != null) {
-            System.out.println("");
+        sc.nextLine();
+
+        if ((alunoParaEditar = alunoRepository.getByMatriccula(matricula)) != null) {
+            System.out.println("Deseja trocar de curso ou trancar (digite 1 para trocar ou 2 para trancar): ");
+            int escolha = sc.nextInt();
+
+            sc.nextLine();
+
+            if (escolha == 1) {
+                System.out.println("Digite o novo curso: ");
+                String curso = sc.nextLine();
+                alunoParaEditar.setCurso(curso);
+            } else if (escolha == 2) {
+
+                System.out.println("Voce quer trancar o curso? (s ou qualquer tecla para n)");
+                char c = sc.next().charAt(0);
+
+                if (c == 's' || c == 'S') {
+                    alunoParaEditar.setTrancamentoDeCurso(Boolean.valueOf(true));
+                    System.out.println("Voce trancou o curso!");
+                }
+            }
         }
         sc.close();
 
+    }
+
+    public static void matricularTurma() {
+        Aluno alunoParaMatricular = new Aluno();
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Digite o numero da matrícula do estudante");
+        Integer matricula = sc.nextInt();
+
+        if ((alunoParaMatricular = alunoRepository.getByMatriccula(matricula)) != null) {
+
+        }
     }
 }
