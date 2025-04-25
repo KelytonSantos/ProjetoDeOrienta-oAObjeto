@@ -1,4 +1,4 @@
-package model;
+package entidades;
 
 public class Aluno {
 
@@ -51,6 +51,12 @@ public class Aluno {
 
     public void setTrancamentoDeCurso(Boolean trancamentoDeCurso) {
         this.trancamentoDeCurso = trancamentoDeCurso;
+    }
+
+    @Override
+    public String toString() {
+
+        return getMatricula() + "," + getNome() + "," + getCurso() + "," + getTrancamentoDeCurso();
     }
 
 }

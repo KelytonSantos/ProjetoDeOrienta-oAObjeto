@@ -1,4 +1,4 @@
-package model;
+package entidades;
 
 public class AlunoEspecial extends Aluno {
     private Boolean alunoEspecial;

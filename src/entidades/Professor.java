@@ -1,4 +1,4 @@
-package model;
+package entidades;
 
 public class Professor {
     private String nome;

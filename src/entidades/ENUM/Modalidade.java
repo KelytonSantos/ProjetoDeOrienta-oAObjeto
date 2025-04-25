@@ -1,4 +1,4 @@
-package model.ENUM;
+package entidades.ENUM;
 
 public enum Modalidade {
     PRESENCIAL(1),

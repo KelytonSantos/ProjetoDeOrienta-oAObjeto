@@ -1,12 +1,14 @@
-package model;
+package entidades;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
-import model.ENUM.MetodoDeAvaliacao;
-import model.ENUM.Modalidade;
+import entidades.ENUM.MetodoDeAvaliacao;
+import entidades.ENUM.Modalidade;
 
 public class Turma {
     private Professor professor;
@@ -15,7 +17,9 @@ public class Turma {
     private Modalidade modoDeParticipacao;
     private Map<DayOfWeek, LocalTime> horarioDeAula;
     private Integer capacidade;
+    private Integer sala;
     private Integer maxAlunos;
+    private Set<Aluno> alunos = new HashSet<>();// escrever metodos
 
     public Turma() {
         this.professor = new Professor();
@@ -24,6 +28,7 @@ public class Turma {
         this.modoDeParticipacao = Modalidade.PRESENCIAL;
         this.horarioDeAula = new HashMap<>();
         this.capacidade = 0;
+        this.sala = 0;
         this.maxAlunos = 190;
     }
 
@@ -34,6 +39,7 @@ public class Turma {
         this.metodoDeAvaliacao = metodoDeAvaliacao;
         this.modoDeParticipacao = modoDeParticipacao;
         this.capacidade = capacidade;
+        setSala();
         this.maxAlunos = maxAlunos;
     }
 
@@ -77,6 +83,15 @@ public class Turma {
         this.capacidade = capacidade;
     }
 
+    public Integer getSala() {
+        return sala;
+    }
+
+    public void setSala() {
+        if (modoDeParticipacao == Modalidade.valueOf(2))
+            this.sala = null;
+    }
+
     public Integer getMaxAlunos() {
         return maxAlunos;
     }
@@ -93,4 +108,11 @@ public class Turma {
         return horarioDeAula;
     }
 
+    public void setAluno(Aluno aluno) {
+        this.alunos.add(aluno);
+    }
+
+    public Set<Aluno> getAlunos() {
+        return alunos;
+    }
 }

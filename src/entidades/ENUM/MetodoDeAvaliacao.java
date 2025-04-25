@@ -1,4 +1,4 @@
-package model;
+package entidades.ENUM;
 
 public enum MetodoDeAvaliacao {
     MEDIA_SIMPLES(1),

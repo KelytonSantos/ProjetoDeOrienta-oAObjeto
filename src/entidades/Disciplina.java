@@ -1,20 +1,20 @@
-package model;
+package entidades;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Classe {
+public class Disciplina {
 
     private String nome;
     private Integer cargaHoraria;
     private List<Turma> turma = new ArrayList<>();
 
-    public Classe() {
+    public Disciplina() {
         this.nome = "";
         this.cargaHoraria = 0;
     }
 
-    public Classe(String nome, Integer cargaHoraria) {
+    public Disciplina(String nome, Integer cargaHoraria) {
         this.nome = nome;
         this.cargaHoraria = cargaHoraria;
     }
@@ -39,7 +39,7 @@ public class Classe {
         return turma;
     }
 
-    public void setTurma(List<Turma> turma) {
-        this.turma = turma;
+    public void setTurma(Turma turma) {
+        this.turma.add(turma);
     }
 }
