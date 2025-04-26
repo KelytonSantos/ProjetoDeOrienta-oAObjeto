@@ -1,6 +1,8 @@
 import java.util.Scanner;
 
 import entidades.Aluno;
+import entidades.Professor;
+import entidades.Turma;
 import repositories.AlunoRepository;
 
 public class App {
@@ -153,16 +155,18 @@ public class App {
 
     }
 
-    public static void matricularTurma() {
-        Aluno alunoParaMatricular = new Aluno();
+    public static void criarTurma() {
+        Turma turma = new Turma();
+        Professor novoProfessor = new Professor();
 
-        Scanner sc = new Scanner(System.in);
+        System.out.println("Digite o nome do professor que dara esta materia: ");
+        String professor = sc.nextLine();
 
-        System.out.println("Digite o numero da matrícula do estudante");
-        Integer matricula = sc.nextInt();
+        System.out.println("Digite o semestre em que a matéria esta dísponivel: ");
+        Integer semestre = sc.nextInt();
+        System.out.println();
 
-        if ((alunoParaMatricular = alunoRepository.getByMatriccula(matricula)) != null) {
+        turma.se
 
-        }
     }
 }

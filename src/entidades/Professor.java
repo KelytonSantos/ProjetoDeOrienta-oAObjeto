@@ -29,4 +29,9 @@ public class Professor {
     public void setMatricula(Integer matricula) {
         this.matricula = matricula;
     }
+
+    @Override
+    public String toString() {
+        return getMatricula() + "," + getNome();
+    }
 }

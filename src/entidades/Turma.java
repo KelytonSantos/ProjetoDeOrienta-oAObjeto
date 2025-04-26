@@ -115,4 +115,10 @@ public class Turma {
     public Set<Aluno> getAlunos() {
         return alunos;
     }
+
+    @Override
+    public String toString() {
+        return getProfessor().getNome() + "," + getSemestre() + "," + getModoDeParticipacao() + "," + getHorarioDeAula()
+                + "," + getCapacidade() + "," + getSala() + "," + getMaxAlunos();
+    }
 }
