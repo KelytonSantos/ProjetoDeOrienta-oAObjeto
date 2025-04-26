@@ -13,7 +13,7 @@ public class ProfessorRepository {
     public void save(Professor professor) {
 
         try {
-            FileWriter arquivo = new FileWriter("Alunos.csv", true);
+            FileWriter arquivo = new FileWriter("Professor.csv", true);
 
             Professor professorToCompare = getProfessorByMatricula(professor.getMatricula());
 
@@ -35,7 +35,7 @@ public class ProfessorRepository {
     public List<Professor> getProfessores() {
         List<Professor> professores = new ArrayList<>();
 
-        try (Scanner leitor = new Scanner(new FileReader("Alunos.csv"))) {
+        try (Scanner leitor = new Scanner(new FileReader("Professor.csv"))) {
 
             while (leitor.hasNextLine()) {
 

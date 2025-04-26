@@ -33,7 +33,8 @@ public class App {
 
                 switch (escolha) {
                     case 1:
-                        System.out.println("Deseja matrícular aluno ou editar? (1 para matricular, 2 para editar)");
+                        System.out.println(
+                                "Deseja matrícular aluno/aluno especial ou editar? (1 para matricular, 2 para editar)");
                         escolha = sc.nextInt();
                         if (escolha == 1)
                             matricularAluno();
@@ -68,7 +69,7 @@ public class App {
 
                         break;
                     case 2:
-
+                        criarTurma();
                         break;
                     case 3:
 
@@ -107,20 +108,28 @@ public class App {
     }
 
     public static void matricularAluno() {
+        System.out.println("O aluno que deseja matricular é especial (s ou n)?");
+        char escolha = sc.next().charAt(0);
 
-        System.out.println("Digite a matrícula do aluno: ");
-        Integer matricula = sc.nextInt();
-        sc.nextLine();
-        System.out.println("Digite o nome do Aluno: ");
-        String nome = sc.nextLine();
+        if (escolha == 's' || escolha == 'S') {
+            System.out.println("Digite a matrícula do novo aluno especial: ");
+            int matricula = sc.nextInt();
 
-        System.out.println("Digite o nome do curso: ");
-        String curso = sc.nextLine();
+        } else {
 
-        Aluno aluno = new Aluno(nome, matricula, curso, Boolean.valueOf(false));
+            System.out.println("Digite a matrícula do aluno: ");
+            Integer matricula = sc.nextInt();
+            sc.nextLine();
+            System.out.println("Digite o nome do Aluno: ");
+            String nome = sc.nextLine();
 
-        alunoRepository.save(aluno);
+            System.out.println("Digite o nome do curso: ");
+            String curso = sc.nextLine();
 
+            Aluno aluno = new Aluno(nome, matricula, curso, Boolean.valueOf(false));
+
+            alunoRepository.save(aluno);
+        }
     }
 
     public static void editarAluno() {
