@@ -1,6 +1,5 @@
 package entidades;
 
-import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -15,8 +14,7 @@ public class Turma {
     private Integer semestre;
     private MetodoDeAvaliacao metodoDeAvaliacao;
     private Modalidade modoDeParticipacao;
-    private Map<DayOfWeek, LocalTime> horarioDeAula;
-    private Integer capacidade;
+    private Map<String, LocalTime> horarioDeAula;
     private Integer sala;
     private Integer maxAlunos;
     private Set<Aluno> alunos = new HashSet<>();// escrever metodos
@@ -27,19 +25,17 @@ public class Turma {
         this.metodoDeAvaliacao = MetodoDeAvaliacao.MEDIA_SIMPLES;
         this.modoDeParticipacao = Modalidade.PRESENCIAL;
         this.horarioDeAula = new HashMap<>();
-        this.capacidade = 0;
         this.sala = 0;
         this.maxAlunos = 190;
     }
 
     public Turma(Professor professor, Integer semestre, MetodoDeAvaliacao metodoDeAvaliacao,
-            Modalidade modoDeParticipacao, Integer capacidade, Integer maxAlunos) {
+            Modalidade modoDeParticipacao, Integer maxAlunos) {
         this.professor = professor;
         this.semestre = semestre;
         this.metodoDeAvaliacao = metodoDeAvaliacao;
         this.modoDeParticipacao = modoDeParticipacao;
-        this.capacidade = capacidade;
-        setSala();
+        this.modoDeParticipacao = modoDeParticipacao;
         this.maxAlunos = maxAlunos;
     }
 
@@ -75,21 +71,14 @@ public class Turma {
         this.modoDeParticipacao = modoDeParticipacao;
     }
 
-    public Integer getCapacidade() {
-        return capacidade;
-    }
-
-    public void setCapacidade(Integer capacidade) {
-        this.capacidade = capacidade;
-    }
-
     public Integer getSala() {
         return sala;
     }
 
-    public void setSala() {
+    public void setSala(Modalidade modalidade) {
         if (modoDeParticipacao == Modalidade.valueOf(2))
             this.sala = null;
+        this.modoDeParticipacao = modalidade;
     }
 
     public Integer getMaxAlunos() {
@@ -100,11 +89,11 @@ public class Turma {
         this.maxAlunos = maxAlunos;
     }
 
-    public void setHorarioDeAula(DayOfWeek dia, int hora, int minuto) {
+    public void setHorarioDeAula(String dia, int hora, int minuto) {
         horarioDeAula.put(dia, LocalTime.of(hora, minuto));
     }
 
-    public Map<DayOfWeek, LocalTime> getHorarioDeAula() {
+    public Map<String, LocalTime> getHorarioDeAula() {
         return horarioDeAula;
     }
 
@@ -119,6 +108,6 @@ public class Turma {
     @Override
     public String toString() {
         return getProfessor().getNome() + "," + getSemestre() + "," + getModoDeParticipacao() + "," + getHorarioDeAula()
-                + "," + getCapacidade() + "," + getSala() + "," + getMaxAlunos();
+                + "," + getSala() + "," + getMaxAlunos();
     }
 }

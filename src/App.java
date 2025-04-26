@@ -3,12 +3,15 @@ import java.util.Scanner;
 import entidades.Aluno;
 import entidades.Professor;
 import entidades.Turma;
+import entidades.ENUM.MetodoDeAvaliacao;
+import entidades.ENUM.Modalidade;
 import repositories.AlunoRepository;
+import repositories.ProfessorRepository;
 
 public class App {
     public static Scanner sc = new Scanner(System.in);
-
     public static AlunoRepository alunoRepository = new AlunoRepository();
+    public static ProfessorRepository professorRepository = new ProfessorRepository();
 
     public static void main(String[] args) throws Exception {
 
@@ -130,7 +133,7 @@ public class App {
 
         sc.nextLine();
 
-        if ((alunoParaEditar = alunoRepository.getByMatriccula(matricula)) != null) {
+        if ((alunoParaEditar = alunoRepository.getAlunoByMatricula(matricula)) != null) {
             System.out.println("Deseja trocar de curso ou trancar (digite 1 para trocar ou 2 para trancar): ");
             int escolha = sc.nextInt();
 
@@ -156,17 +159,43 @@ public class App {
     }
 
     public static void criarTurma() {
-        Turma turma = new Turma();
+
         Professor novoProfessor = new Professor();
 
-        System.out.println("Digite o nome do professor que dara esta materia: ");
-        String professor = sc.nextLine();
+        System.out.println("Digite a matricula do professor que dara esta materia: ");
+        Integer matriculaProfessor = sc.nextInt();
 
-        System.out.println("Digite o semestre em que a matéria esta dísponivel: ");
-        Integer semestre = sc.nextInt();
-        System.out.println();
+        novoProfessor = professorRepository.getProfessorByMatricula(matriculaProfessor);
 
-        turma.se
+        if (novoProfessor.getMatricula() != null) {
+            System.out.println("Professor não existente, cadastre primeiro um professor!");
+        } else {
 
+            System.out.println("Digite o semestre em que a matéria esta dísponivel: ");
+            Integer semestre = sc.nextInt();
+
+            sc.nextLine();
+
+            System.out.println("Digite o metodo de avaliação do professor: ");
+            String metodoDeAval = sc.nextLine();
+
+            System.out.println("Digite o modo de participação na materia (online ou presencial): ");
+            String modoDePartici = sc.nextLine();
+
+            System.out.println(
+                    "Defina o dia da semana, o horario e os minutos em que serão ministradas as aulas (ex: QUINTA, 14, 00)");
+            String diaDaSemana = sc.next();
+            Integer hora = sc.nextInt();
+            sc.nextLine();
+            Integer minutos = sc.nextInt();
+
+            System.out.println("Defina a capacidade maxima de alunos: ");
+            Integer capacidadeMax = sc.nextInt();
+
+            Turma novaTurma = new Turma(novoProfessor, semestre, MetodoDeAvaliacao.valueOf(metodoDeAval),
+                    Modalidade.valueOf(modoDePartici), capacidadeMax);
+
+            novaTurma.setHorarioDeAula(diaDaSemana, hora, minutos);
+        }
     }
 }
