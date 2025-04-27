@@ -191,6 +191,8 @@ public class App {
             System.out.println("Professor não existente, cadastre primeiro um professor!");
         } else {
 
+            novoProfessor = professorRepository.getProfessorByMatricula(matriculaProfessor);
+
             System.out.println("Digite o semestre em que a matéria esta dísponivel: ");
             int semestre = sc.nextInt();
 
@@ -201,11 +203,6 @@ public class App {
 
             System.out.println("Digite o modo de participação na materia (1 para online ou 2 para presencial): ");
             int modoDePartici = sc.nextInt();
-
-            if (modoDePartici == 2) {
-                System.out.println("Digite a sala (ex: S9): ");
-                String sala = sc.nextLine();
-            }
 
             System.out.println(
                     "Defina o dia da semana, o horario e os minutos em que serão ministradas as aulas (ex: Quinta, 14, 00)");
@@ -222,11 +219,18 @@ public class App {
             Turma novaTurma = new Turma(novoProfessor, semestre, MetodoDeAvaliacao.fromCode(metodoDeAval),
                     Modalidade.valueOf(modoDePartici), horarioDeAula, capacidadeMax);
 
+            sc.nextLine();
             if (modoDePartici == 2) {
-                novaTurma.setSala(diaDaSemana);
+                System.out.println("Digite a sala (ex: S9): ");
+                String sala = sc.nextLine();
+                novaTurma.setSala(sala);
             }
 
+            System.out.println(novoProfessor.getNome());
+
+            turmaRepository.save(novaTurma);
         }
+
     }
 
     public static void criarProfessor() {
