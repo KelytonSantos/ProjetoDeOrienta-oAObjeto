@@ -47,8 +47,9 @@ public class AlunoEspecialRepository {
                 String curso = colunas[2];
                 Boolean trancamento = Boolean.parseBoolean(colunas[3]);
 
-                AlunoEspecial novoAluno = new AlunoEspecial(nome, matricula, curso, trancamento);
-                alunos.add(novoAluno);
+                // AlunoEspecial novoAluno = new AlunoEspecial(nome, matricula, curso,
+                // trancamento);
+                // alunos.add(novoAluno);
             }
 
         } catch (IOException error) {
@@ -73,9 +74,9 @@ public class AlunoEspecialRepository {
                     String curso = colunas[2];
                     Boolean trancamento = Boolean.parseBoolean(colunas[3]);
 
-                    AlunoEspecial aluno = new AlunoEspecial(nome, matricula, curso, trancamento);
+                    // AlunoEspecial aluno = new AlunoEspecial(nome, matricula, curso, trancamento);
 
-                    return aluno;
+                    // return aluno;
                 }
 
                 System.out.println("Matricula não encontrada");

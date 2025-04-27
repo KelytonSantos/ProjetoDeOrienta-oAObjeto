@@ -78,7 +78,6 @@ public class AlunoRepository {
                     return aluno;
                 }
 
-                System.out.println("Matricula não encontrada");
             }
         } catch (IOException error) {
             System.out.println("Erro ao tentar encontrar aluno pela matrícula:" + error.getMessage());

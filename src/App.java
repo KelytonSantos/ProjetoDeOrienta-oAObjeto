@@ -1,17 +1,21 @@
 import java.util.Scanner;
 
 import entidades.Aluno;
+import entidades.AlunoEspecial;
+import entidades.HorarioDeAula;
 import entidades.Professor;
 import entidades.Turma;
 import entidades.ENUM.MetodoDeAvaliacao;
 import entidades.ENUM.Modalidade;
 import repositories.AlunoRepository;
 import repositories.ProfessorRepository;
+import repositories.TurmaRepository;
 
 public class App {
     public static Scanner sc = new Scanner(System.in);
     public static AlunoRepository alunoRepository = new AlunoRepository();
     public static ProfessorRepository professorRepository = new ProfessorRepository();
+    public static TurmaRepository turmaRepository = new TurmaRepository();
 
     public static void main(String[] args) throws Exception {
 
@@ -61,17 +65,24 @@ public class App {
 
             case 2:
                 System.out.println("O que deseja fazer?");
-                System.out.println("1 - Cadastrar Disciplina");
-                System.out.println("2 - Criar turmas");
-                System.out.println("3 - Ver Turmas disponíveis");
+                System.out.println("1 - Cadastrar novo Professor");
+                System.out.println("2 - Cadastrar Disciplina");
+                System.out.println("3 - Criar turmas");
+                System.out.println("4 - Ver Turmas disponíveis");
+
+                escolha = sc.nextInt();
+
                 switch (escolha) {
                     case 1:
-
+                        criarProfessor();
                         break;
                     case 2:
-                        criarTurma();
+
                         break;
                     case 3:
+                        criarTurma();
+                        break;
+                    case 4:
 
                         break;
                     default:
@@ -115,10 +126,12 @@ public class App {
             System.out.println("Digite a matrícula do novo aluno especial: ");
             int matricula = sc.nextInt();
 
+            AlunoEspecial novoAlunoEspecial = new AlunoEspecial();
+
         } else {
 
             System.out.println("Digite a matrícula do aluno: ");
-            Integer matricula = sc.nextInt();
+            int matricula = sc.nextInt();
             sc.nextLine();
             System.out.println("Digite o nome do Aluno: ");
             String nome = sc.nextLine();
@@ -138,7 +151,7 @@ public class App {
         Scanner sc = new Scanner(System.in);
 
         System.out.println("Digite a matricula do aluno: ");
-        Integer matricula = sc.nextInt();
+        int matricula = sc.nextInt();
 
         sc.nextLine();
 
@@ -171,40 +184,69 @@ public class App {
 
         Professor novoProfessor = new Professor();
 
-        System.out.println("Digite a matricula do professor que dara esta materia: ");
-        Integer matriculaProfessor = sc.nextInt();
+        System.out.println("Digite a matricula do professor que dara a materia: ");
+        int matriculaProfessor = sc.nextInt();
 
-        novoProfessor = professorRepository.getProfessorByMatricula(matriculaProfessor);
-
-        if (novoProfessor.getMatricula() != null) {
+        if (professorRepository.getProfessorByMatricula(matriculaProfessor) == null) {
             System.out.println("Professor não existente, cadastre primeiro um professor!");
         } else {
 
             System.out.println("Digite o semestre em que a matéria esta dísponivel: ");
-            Integer semestre = sc.nextInt();
+            int semestre = sc.nextInt();
 
             sc.nextLine();
 
-            System.out.println("Digite o metodo de avaliação do professor: ");
+            System.out.println("Digite o metodo de avaliação do professor(MEDIA PONDERADA ou MEDIA SIMPLES): ");
             String metodoDeAval = sc.nextLine();
 
-            System.out.println("Digite o modo de participação na materia (online ou presencial): ");
-            String modoDePartici = sc.nextLine();
+            System.out.println("Digite o modo de participação na materia (1 para online ou 2 para presencial): ");
+            int modoDePartici = sc.nextInt();
+
+            if (modoDePartici == 2) {
+                System.out.println("Digite a sala (ex: S9): ");
+                String sala = sc.nextLine();
+            }
 
             System.out.println(
-                    "Defina o dia da semana, o horario e os minutos em que serão ministradas as aulas (ex: QUINTA, 14, 00)");
+                    "Defina o dia da semana, o horario e os minutos em que serão ministradas as aulas (ex: Quinta, 14, 00)");
             String diaDaSemana = sc.next();
-            Integer hora = sc.nextInt();
+            int hora = sc.nextInt();
             sc.nextLine();
-            Integer minutos = sc.nextInt();
+            int minutos = sc.nextInt();
 
             System.out.println("Defina a capacidade maxima de alunos: ");
-            Integer capacidadeMax = sc.nextInt();
+            int capacidadeMax = sc.nextInt();
 
-            Turma novaTurma = new Turma(novoProfessor, semestre, MetodoDeAvaliacao.valueOf(metodoDeAval),
-                    Modalidade.valueOf(modoDePartici), capacidadeMax);
+            HorarioDeAula horarioDeAula = new HorarioDeAula(diaDaSemana, hora, minutos);
 
-            novaTurma.setHorarioDeAula(diaDaSemana, hora, minutos);
+            Turma novaTurma = new Turma(novoProfessor, semestre, MetodoDeAvaliacao.fromCode(metodoDeAval),
+                    Modalidade.valueOf(modoDePartici), horarioDeAula, capacidadeMax);
+
+            if (modoDePartici == 2) {
+                novaTurma.setSala(diaDaSemana);
+            }
+
+        }
+    }
+
+    public static void criarProfessor() {
+
+        System.out.println("Digite a matricula do novo professor: ");
+        int matricula = sc.nextInt();
+
+        if (professorRepository.getProfessorByMatricula(matricula) != null) {
+            System.out.println("Professor ja existe");
+
+        } else {
+            sc.nextLine();
+
+            System.out.println("Digite o nome do professor: ");
+            String nomeProfessor = sc.nextLine();
+
+            Professor novoProfessor = new Professor(nomeProfessor, matricula);
+
+            professorRepository.save(novoProfessor);
+
         }
     }
 }

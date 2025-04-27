@@ -10,21 +10,14 @@ import java.util.Scanner;
 import entidades.Professor;
 
 public class ProfessorRepository {
-    public void save(Professor professor) {
 
+    public void save(Professor professor) {
         try {
             FileWriter arquivo = new FileWriter("Professor.csv", true);
 
-            Professor professorToCompare = getProfessorByMatricula(professor.getMatricula());
-
-            if (professor.getMatricula() == professorToCompare.getMatricula()) {
-                System.out.println("Professor ja existe!");
-
-            } else {
-                arquivo.write(professor.toString());
-                arquivo.write("\n");
-                arquivo.close();
-            }
+            arquivo.write(professor.toString());
+            arquivo.write("\n");
+            arquivo.close();
 
         } catch (IOException error) {
             System.out.println("Erro ao tentar salvar" + error.getMessage());
@@ -66,6 +59,28 @@ public class ProfessorRepository {
 
                 if (matricula.equals(Integer.parseInt(colunas[0]))) {
                     String nome = colunas[1];
+                    Professor professor = new Professor(nome, matricula);
+
+                    return professor;
+                }
+            }
+
+        } catch (IOException error) {
+            System.out.println("Erro ao tentar encontrar professor pela matrícula: " + error.getMessage());
+        }
+
+        return null;
+    }
+
+    public Professor getProfessorByNome(String nome) {
+        try (Scanner leitor = new Scanner(new FileReader("Professor.csv"))) {
+
+            while (leitor.hasNextLine()) {
+                String linha = leitor.nextLine();
+                String[] colunas = linha.split(",");
+
+                if (nome.equals(colunas[1])) {
+                    Integer matricula = Integer.parseInt(colunas[0]);
                     Professor professor = new Professor(nome, matricula);
 
                     return professor;
